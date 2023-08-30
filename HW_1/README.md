@@ -19,7 +19,17 @@
 
 1. Создали новый проект под названием "JavaCoreHW_1" и запустили его для проверки работоспособности.
 
-![screenshot](Screenshots/shot_1.PNG)
+![screenshot](Screenshots/img_1.PNG)
 
 
-2. 
+2. Создаем дополнительные классы "Decorator" и "OtherClass". Заполняем их необходимым кодом. Обязательно распрелеляем по package. Собираем и запускаем приложение. Всё работает.
+
+![screenshot](Screenshots/img_2.PNG)
+
+3. Необходимо установить Docker Desktop.
+Переходим по ссылке  https://www.docker.com/products/docker-desktop/ и устанавливаем.
+
+
+
+
+
