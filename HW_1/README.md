@@ -29,7 +29,7 @@
 3. Необходимо установить Docker Desktop.
 Переходим по ссылке  https://www.docker.com/products/docker-desktop/ и устанавливаем.
 
-
+![screenshot](Screenshots/img_3.PNG)
 
 
 
