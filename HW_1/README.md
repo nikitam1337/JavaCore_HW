@@ -7,9 +7,8 @@
 производить четыре основных математических действия и осуществлять форматированный
 вывод результатов пользователю (ИЛИ ЛЮБОЕ ДРУГОЕ ПРИЛОЖЕНИЕ НА ВАШ ВЫБОР, которое просто демонстрирует работу некоторого механизма).
 
-Пример моего приложения я прикрепил к материалам урока.
-
 Необходимо установить Docker Desktop.
+
 Создать Dockerfile, позволяющий откопировать исходный код вашего приложения в образ для демонстрации работы вашего приложения при создании соответствующего контейнера.
 
 Подобную процедуру мы с вами проделали на уроке, теперь необходимо проделать данную процедуру самостоятельно.
@@ -21,13 +20,40 @@
 
 ![screenshot](Screenshots/img_1.PNG)
 
-
 2. Создаем дополнительные классы "Decorator" и "OtherClass". Заполняем их необходимым кодом. Обязательно распрелеляем по package. Собираем и запускаем приложение. Всё работает.
 
 ![screenshot](Screenshots/img_2.PNG)
 
 3. Необходимо установить Docker Desktop.
 Переходим по ссылке  https://www.docker.com/products/docker-desktop/ и устанавливаем.
+
+![screenshot](Screenshots/img_3.PNG)
+
+4. Создать Dockerfile, позволяющий откопировать исходный код вашего приложения в образ для демонстрации работы вашего приложения при создании соответствующего контейнера.
+
+- создаём Dockerfile и заполняем его следующим содержимым:
+
+```docker 
+FROM bellsoft/liberica-openjdk-alpine:11.0.16.1-1
+COPY ./java ./src
+
+RUN mkdir ./out
+RUN javac -sourcepath ./src -d out ./src/ru/geekbrains/sample/Main.java
+
+CMD java -classpath ./out ru.geekbrains.sample.Main
+```
+
+![screenshot](Screenshots/img_4.PNG)
+
+- далее пишем в терминале 2 команды:
+
+```bash
+docker build . -t hw1:latest 
+docker run -rm hw1:latest
+```
+![screenshot](Screenshots/img_5.PNG)
+![screenshot](Screenshots/img_6.PNG)
+![screenshot](Screenshots/img_7.PNG)
 
 
 
