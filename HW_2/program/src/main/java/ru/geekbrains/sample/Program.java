@@ -15,15 +15,20 @@ public class Program {
 
     private static char[][] field; // Двумерный массив хранит текущее состояние игрового поля
 
-    private static int fieldSizeX; // Размерность игрового поля
+    private static int fieldSizeX;// Размерность игрового поля
     private static int fieldSizeY; // Размерность игрового поля
+    private static int maxFieldSizeX; // Максимальный размер игорового поля по оси X - задан изначально
+
+    private static int maxFieldSizeY; // Максимальный размер игорового поля по оси Y - задан изначально
 
 
     public static void main(String[] args) {
-        field = new char[3][];
+        field = new char[3][3];
+        maxFieldSizeX = 15; // - Тут можно изменить предельрный размер игрового поля перед Запуском программы!
+        maxFieldSizeY = 15;
 
         while (true) {
-            initialize();
+            initialize(maxFieldSizeX, maxFieldSizeY);
             printField();
             while (true) {
                 humanTurn();
@@ -44,14 +49,44 @@ public class Program {
     /**
      * Инициализация объектов игры
      */
-    private static void initialize() {
+    private static void initialize(int maxFieldSizeX, int maxFieldSizeY) {
         System.out.println("Игра Крестики-Нолики");
-        fieldSizeX = 3;
-        fieldSizeY = 3;
-        field = new char[fieldSizeX][fieldSizeY];
-        for (int x = 0; x < fieldSizeX; x++) {
-            for (int y = 0; y < fieldSizeY; y++) {
-                field[x][y] = DOT_EMPTY;
+        int xSize = maxFieldSizeX; // x - горизонтальная ось
+        int ySize = maxFieldSizeY; // y - вертикальная ось
+        do {
+            System.out.println("Задайте размер игрового поля.");
+            while (true) {
+                System.out.printf("Размер по вертикали: (от 3 до %s ): ", maxFieldSizeY); //(от 3 до maxFiledSizeY)
+                if (scanner.hasNextInt()) {
+                    ySize = scanner.nextInt();
+                    scanner.nextLine();
+                    break;
+                } else {
+                    System.out.println("Некорректное число, повторите попытку ввода.");
+                    scanner.nextLine();
+                }
+            }
+
+            while (true) {
+                System.out.printf("Размер по горизонтали: (от 3 до %s): ", maxFieldSizeX); //(от 3 до maxFiledSizeX)
+                if (scanner.hasNextInt()) {
+                    xSize = scanner.nextInt();
+                    scanner.nextLine();
+                    break;
+                } else {
+                    System.out.println("Некорректное число, повторите попытку ввода.");
+                    scanner.nextLine();
+                }
+            }
+        }
+        while (!isSizeValid(xSize, ySize));
+
+        fieldSizeX = xSize;
+        fieldSizeY = ySize;
+        field = new char[fieldSizeY][fieldSizeX];
+        for (int y = 0; y < fieldSizeY; y++) {
+            for (int x = 0; x < fieldSizeX; x++) {
+                field[y][x] = DOT_EMPTY;
             }
         }
     }
@@ -65,7 +100,7 @@ public class Program {
      * 3|*|*|0|
      * --------
      */
-    private static void printField() {
+    private static void printField() { // TODO Проверить метод печати поля и сделать более красивым
         System.out.print("+");
         for (int x = 0; x < fieldSizeX * 2 + 1; x++) {
             System.out.print((x % 2 == 0) ? "-" : x / 2 + 1);
@@ -90,13 +125,13 @@ public class Program {
     /**
      * Обработка хода игрока (человек)
      */
-    private static void humanTurn() {
+    private static void humanTurn() { // TODO Исправить Х и У координаты местами. Подправить текстовые комментарии
         int x, y;
 
         do {
 
             while (true) {
-                System.out.print("Введите координату хода X (от 1 до 3): ");
+                System.out.print("Введите координату хода X (от 1 до 3): ");// TODO Подправить текстовые комментарии
                 if (scanner.hasNextInt()) {
                     x = scanner.nextInt() - 1;
                     scanner.nextLine();
@@ -147,9 +182,21 @@ public class Program {
     }
 
     /**
+     * Проверка корректности ввода максимального размера поля
+     * (Размеры по оси не должны превышать максимальную размерность игрового поля)
+     *
+     * @param x
+     * @param y
+     * @return
+     */
+    private static boolean isSizeValid(int x, int y) {
+        return x >= 3 && x <= maxFieldSizeX && y >= 3 && y <= maxFieldSizeY;
+    }
+
+    /**
      * Обработка хода компьютера
      */
-    private static void aiTurn() {
+    private static void aiTurn() { // TODO заменить Х и У местами везде
         int x, y;
 
         do {
@@ -186,7 +233,7 @@ public class Program {
      * @param c
      * @return
      */
-    private static boolean checkWin(char c) {
+    private static boolean checkWin(char c) { // TODO Разработать свой метод проверки на победу
 
         // Проверка по трем горизонталям
         if (field[0][0] == c && field[0][1] == c && field[0][2] == c) return true;
