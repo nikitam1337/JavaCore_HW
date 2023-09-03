@@ -35,12 +35,12 @@
 
 ```docker 
 FROM bellsoft/liberica-openjdk-alpine:11.0.16.1-1
-COPY ./src ./src
+COPY ./java ./src
 
 RUN mkdir ./out
-RUN javac -sourcepath ./src -d out ./src/main/java/ru/geekbrains/sample/Main.java
+RUN javac -sourcepath ./src -d out ./src/ru/geekbrains/sample/Main.java
 
-CMD java -classpath ./out main.java.ru.geekbrains.sample.Main
+CMD java -classpath ./out ru.geekbrains.sample.Main
 ```
 
 ![screenshot](Screenshots/img_4.PNG)
@@ -53,6 +53,8 @@ docker run -rm hw1:latest
 ```
 ![screenshot](Screenshots/img_5.PNG)
 ![screenshot](Screenshots/img_6.PNG)
+![screenshot](Screenshots/img_7.PNG)
+
 
 
 
