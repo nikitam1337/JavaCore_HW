@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 public class Program {
 
-    private static final int WIN_COUNT = 4; // Выигрышная комбинация
     private static final char DOT_HUMAN = 'X'; // Фишка игрока - человек
     private static final char DOT_AI = '0'; // Фишка игрока - компьютер
     private static final char DOT_EMPTY = '*'; // Признак пустого поля
@@ -21,11 +20,12 @@ public class Program {
 
     private static int maxFieldSizeY; // Максимальный размер игорового поля по оси Y - задан изначально
 
+    private static  int winCount ; // Выигрышная комбинация
 
     public static void main(String[] args) {
         field = new char[3][3];
-        maxFieldSizeX = 15; // - Тут можно изменить предельрный размер игрового поля перед Запуском программы!
-        maxFieldSizeY = 15;
+        maxFieldSizeX = 9; // - Тут можно изменить предельный размер игрового поля перед Запуском программы!
+        maxFieldSizeY = 9;
 
         while (true) {
             initialize(maxFieldSizeX, maxFieldSizeY);
@@ -81,6 +81,7 @@ public class Program {
         }
         while (!isSizeValid(xSize, ySize));
 
+
         fieldSizeX = xSize;
         fieldSizeY = ySize;
         field = new char[fieldSizeY][fieldSizeX];
@@ -89,6 +90,22 @@ public class Program {
                 field[y][x] = DOT_EMPTY;
             }
         }
+
+        do {
+            System.out.println("Задайте комбинацию для победы!");
+            while (true) {
+                System.out.printf("Количество в ряд для победы: (от 3 до %s ): ", Math.min(fieldSizeX,fieldSizeY));
+                if (scanner.hasNextInt()) {
+                    winCount = scanner.nextInt();
+                    scanner.nextLine();
+                    break;
+                } else {
+                    System.out.println("Некорректное число, повторите попытку ввода.");
+                    scanner.nextLine();
+                }
+            }
+        }
+        while (!isWinCountValid(winCount));
     }
 
     /**
@@ -100,17 +117,21 @@ public class Program {
      * 3|*|*|0|
      * --------
      */
-    private static void printField() { // TODO Проверить метод печати поля и сделать более красивым
-        System.out.print("+");
+    private static void printField() {
+        System.out.print("% ");
         for (int x = 0; x < fieldSizeX * 2 + 1; x++) {
-            System.out.print((x % 2 == 0) ? "-" : x / 2 + 1);
+            System.out.print((x % 2 == 0) ? "|" : x / 2 + 1);
         }
         System.out.println();
 
-        for (int x = 0; x < fieldSizeX; x++) {
-            System.out.print(x + 1 + "|");
-            for (int y = 0; y < fieldSizeY; y++) {
-                System.out.print(field[x][y] + "|");
+        for (int y = 0; y < fieldSizeY; y++) {
+            if (y < 9) {
+                System.out.print(y + 1 + " |");
+            } else {
+                System.out.print(y + 1 + "|");
+            }
+            for (int x = 0; x < fieldSizeX; x++) {
+                System.out.print(field[y][x] + "|");
             }
             System.out.println();
         }
@@ -125,13 +146,13 @@ public class Program {
     /**
      * Обработка хода игрока (человек)
      */
-    private static void humanTurn() { // TODO Исправить Х и У координаты местами. Подправить текстовые комментарии
+    private static void humanTurn() {
         int x, y;
 
         do {
 
             while (true) {
-                System.out.print("Введите координату хода X (от 1 до 3): ");// TODO Подправить текстовые комментарии
+                System.out.printf("Введите координату хода X (от 1 до %s): ", fieldSizeX);
                 if (scanner.hasNextInt()) {
                     x = scanner.nextInt() - 1;
                     scanner.nextLine();
@@ -143,7 +164,7 @@ public class Program {
             }
 
             while (true) {
-                System.out.print("Введите координату хода Y (от 1 до 3): ");
+                System.out.printf("Введите координату хода Y (от 1 до %s): ", fieldSizeY);
                 if (scanner.hasNextInt()) {
                     y = scanner.nextInt() - 1;
                     scanner.nextLine();
@@ -155,7 +176,7 @@ public class Program {
             }
         }
         while (!isCellValid(x, y) || !isCellEmpty(x, y));
-        field[x][y] = DOT_HUMAN;
+        field[y][x] = DOT_HUMAN;
     }
 
     /**
@@ -166,7 +187,7 @@ public class Program {
      * @return
      */
     private static boolean isCellEmpty(int x, int y) {
-        return field[x][y] == DOT_EMPTY;
+        return field[y][x] == DOT_EMPTY;
     }
 
     /**
@@ -183,10 +204,10 @@ public class Program {
 
     /**
      * Проверка корректности ввода максимального размера поля
-     * (Размеры по оси не должны превышать максимальную размерность игрового поля)
+     * (Размеры по осям не должны превышать максимальную размерность игрового поля заданную программно)
      *
-     * @param x
-     * @param y
+     * @param x горизонтальная ось
+     * @param y вертикальная ось
      * @return
      */
     private static boolean isSizeValid(int x, int y) {
@@ -194,9 +215,21 @@ public class Program {
     }
 
     /**
+     * Проверка корректности ввода выигрышной комбинации
+     * (Число не должно быть больше размера поля по оси)
+     *
+     * @param c
+     * @return
+     */
+    private static boolean isWinCountValid(int c) {
+        return c >= 3 && c < fieldSizeX && c < fieldSizeY;
+    }
+
+
+    /**
      * Обработка хода компьютера
      */
-    private static void aiTurn() { // TODO заменить Х и У местами везде
+    private static void aiTurn() {
         int x, y;
 
         do {
@@ -204,7 +237,7 @@ public class Program {
             y = random.nextInt(fieldSizeY);
         }
         while (!isCellEmpty(x, y));
-        field[x][y] = DOT_AI;
+        field[y][x] = DOT_AI;
     }
 
     /**
