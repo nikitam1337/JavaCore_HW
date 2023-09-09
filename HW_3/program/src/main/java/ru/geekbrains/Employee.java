@@ -41,16 +41,17 @@ public abstract class Employee implements Comparable<Employee> {
     }
 
     private Employee(String surName, String name){
-        this(surName, name, 500);
+        this(surName, name, 30, 500);
     }
 
-    protected Employee(String surName, String name, double salary){
+    protected Employee(String surName, String name, int age, double salary){
         //System.out.println("Constructor - Employee");
-        if (salary < 500){
-            throw new RuntimeException("Ставка заработной платы должна быть не менее 500");
+        if (salary < 200){
+            throw new RuntimeException("Ставка заработной платы должна быть не менее 200");
         }
         this.surName = surName;
         this.name = name;
+        this.age = age;
         this.salary = salary;
     }
 
@@ -96,6 +97,12 @@ public abstract class Employee implements Comparable<Employee> {
      * Фамилия
      */
     protected String surName;
+
+    /**
+     * Возраст
+     */
+    protected int age;
+
 
     /**
      * Ставка заработной платы

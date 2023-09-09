@@ -5,7 +5,8 @@ import java.util.List;
 
 public class Program {
     public static void main(String[] args) {
-        List<Employee> employees = Worker.getEmployees(15);
+        List<Employee> employees = Worker.getEmployees(10);
+        employees.addAll(Freelancer.getEmployees(10));
 
         for (Employee employee : employees) {
             System.out.println(employee);
