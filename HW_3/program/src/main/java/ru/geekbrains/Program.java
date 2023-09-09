@@ -1,5 +1,10 @@
 package ru.geekbrains;
 
+import ru.geekbrains.Comparators.EmployeeSalaryComparator;
+import ru.geekbrains.Employees.Employee;
+import ru.geekbrains.Employees.Freelancer;
+import ru.geekbrains.Employees.Worker;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -12,12 +17,26 @@ public class Program {
             System.out.println(employee);
         }
 
-        Collections.sort(employees, new EmployeeNameComparator());
+//        Сортировка по Имени и Фамилии:
+
+//        Collections.sort(employees, new EmployeeNameComparator());
+//        System.out.println();
+
+//        Сортировка по Возрасту сотрудников:
+
+//        Collections.sort(employees, new EmployeeAgeComparator());
+//        System.out.println();
+
+//        Сортировка сотрудников по Зарплате:
+
+        Collections.sort(employees, new EmployeeSalaryComparator());
         System.out.println();
 
         for (Employee employee : employees) {
             System.out.println(employee);
         }
+
+
     }
 }
 

@@ -1,4 +1,4 @@
-package ru.geekbrains;
+package ru.geekbrains.Employees;
 import java.util.Random;
 public abstract class Employee implements Comparable<Employee> {
 
@@ -80,6 +80,10 @@ public abstract class Employee implements Comparable<Employee> {
             throw new RuntimeException("Уровень заработной платы должен быть не менее 30000");
         }
         this.salary = salary;
+    }
+
+    public int getAge() {
+        return age;
     }
 
     //endregion
