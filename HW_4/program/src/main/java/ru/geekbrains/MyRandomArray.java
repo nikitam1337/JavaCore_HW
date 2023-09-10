@@ -1,5 +1,7 @@
 package ru.geekbrains;
+
 import java.util.Random;
+
 public class MyRandomArray extends MyArray {
 
     private static Random random = new Random();
@@ -15,7 +17,7 @@ public class MyRandomArray extends MyArray {
      * @param sizeY размер по вертикали
      */
     public MyRandomArray() {
-        super(random.nextInt(2,5),random.nextInt(2,5));
+        super(random.nextInt(4, 5), random.nextInt(4, 5));
     }
 
     @Override
