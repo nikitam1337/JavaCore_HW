@@ -23,23 +23,17 @@ public abstract class MyArray {
         return array;
     }
 
-
-    /**
-     * Создает новый массив
-     *
-     * @param sizeX размер по горизонтали
-     * @param sizeY размер по вертикали
-     */
-//    public MyArray(int sizeX, int sizeY) {
-//        this.sizeX = sizeX;
-//        this.sizeY = sizeY;
-//
-//    }
-    public MyArray(String[][] array,int sizeX, int sizeY) {
+    public MyArray(String[][] array, int sizeX, int sizeY) {
         this.array = array;
-        this.sizeX=sizeX;
-        this.sizeY=sizeY;
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
     }
+
+    public MyArray(int sizeX, int sizeY) {
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
+    }
+
 
     /**
      * Печать массива в консоль
@@ -54,9 +48,27 @@ public abstract class MyArray {
         }
     }
 
+
+    public void makeRandom(int sizeX, int sizeY) {
+        String[][] nullArray = new String[sizeY][sizeX];
+        for (int y = 0; y < sizeY; y++) {
+            for (int x = 0; x < sizeX; x++) {
+                nullArray[y][x] = symbols[random.nextInt(symbols.length)];
+            }
+        }
+        this.array = nullArray;
+    }
+
     /**
-     * @return
+     * @return Пустой абстрактный метод
      */
     public abstract int size();
 
+    protected static String[] symbols = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "a", "b", "c", "d", "f", "g", "k", "m", "n", "p"};
+    protected static Random random = new Random();
+
 }
+
+
+
+
